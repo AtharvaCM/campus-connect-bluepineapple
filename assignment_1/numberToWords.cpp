@@ -34,7 +34,8 @@ void convertToWords(std::string numString)
             return;
         RESULT.insert(0, digits_1[numInt % 10]);           // units place
         RESULT.insert(0, digits_2[((numInt % 100) / 10)]); // ten's place
-        RESULT.insert(0, " Hundred");
+        if (numInt / 100 != 0)                             // if hundred's place is not empty
+            RESULT.insert(0, " Hundred");
         RESULT.insert(0, digits_1[numInt / 100]); // hundred's place
     }
     else if (len == 2)
@@ -54,17 +55,13 @@ void convertToWords(std::string numString)
         printf("\nInvalid length\n");
         exit(1);
     }
-    std::cout << RESULT << std::endl;
+    // std::cout << RESULT << std::endl;
 }
 
-int main()
+void convert(std::string numString)
 {
-    const char *suffix[] = {"", " THOUSAND", " MILLION", " BILLION", " TRILLION", " QUADRILLION", " QUINTRILLION", " SEXTILLION",
-                            " SEPTILIION", " OCTILLION", " NONILLION", " DECILLION"};
-    // store the number in a string
-    std::string numString;
-    std::cout << "\nEnter the number to convert: ";
-    std::cin >> numString;
+    const char *suffix[] = {"", " THOUSAND,", " MILLION,", " BILLION,", " TRILLION,", " QUADRILLION,", " QUINTRILLION,", " SEXTILLION,",
+                            " SEPTILIION,", " OCTILLION,", " NONILLION,", " DECILLION,"};
     std::string splitString;
     int len;
     int loop_counter = 0;
@@ -76,12 +73,12 @@ int main()
     for (loop_counter; loop_counter <= (len / 3); loop_counter++)
     {
         // copy 3 digits into a string buffer
-        std::cout << "numstr = " << numString << std::endl;
+        // std::cout << "numstr = " << numString << std::endl;
         if (numString.length() > 3)
             splitString = numString.substr(numString.length() - 3);
         else
             splitString = numString;
-        std::cout << "split = " << splitString << std::endl;
+        // std::cout << "split = " << splitString << std::endl;
 
         // add the appropriate suffix
         if (splitString != "000")
@@ -99,6 +96,17 @@ int main()
         if (numString.length() > 3)
             numString.erase(numString.length() - 3);
     }
+}
+
+int main()
+{
+    // store the number in a string
+    std::string numString;
+    std::cout << "\nEnter the number to convert: ";
+    std::cin >> numString;
+
+    // function to convert the number string to words
+    convert(numString);
 
     // print the result
     std::cout << RESULT << std::endl;
