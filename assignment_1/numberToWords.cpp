@@ -1,7 +1,6 @@
 // Program that converts number to words in American counting system.
 
 #include <iostream>
-#include <string.h>
 #include <string>
 
 std::string RESULT; // to store the RESULTult string
