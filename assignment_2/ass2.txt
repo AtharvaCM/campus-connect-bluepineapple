@@ -1,0 +1,8 @@
+Array
+1. Palindrome - array of chars, check if its a palindrome.
+2. Matrix multiplication.
+List
+3. Book management system(list of strings) - menu driven program[insert a book, delete a book(by name), print the list, search(by name), exit].
+Map
+4. Word frequency - create map of all the unique words and then find the frequency of the words. Input a word and print its frequency.
+5. Book management system(use map - MD5, SHA1) - menu driven program[insert a book, delete a book(by name), print the list, search(by name), exit].
