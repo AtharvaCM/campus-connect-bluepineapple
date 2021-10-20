@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-std::string RESULT; // to store the RESULTult string
+std::string RESULT; // to store the RESULT string
 
 void convertToWords(std::string numString)
 {
