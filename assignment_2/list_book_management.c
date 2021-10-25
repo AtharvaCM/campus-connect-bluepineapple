@@ -45,15 +45,19 @@ struct node *getnode(char *value)
     struct node *temp = NULL;
 
     temp = (struct node *)malloc(sizeof(struct node));
-    printf("\t\tb4 cpy %s", value);
     // allocate mem for temp->name
     temp->name = malloc(strlen(value) + 1);
     strcpy(temp->name, value);
-    printf("\t\tafter cpy %s", temp->name);
     temp->next = NULL;
 
     // return the address of the node
     return temp;
+}
+
+void freenode(struct node *p)
+{
+    // free memory
+    free(p);
 }
 
 void append(char *value)
@@ -85,7 +89,7 @@ void insert(int pos, char *value)
     }
 
     // declare temp pointers
-    struct node *p = head;
+    struct node *p = (struct node *)head;
     struct node *q = p->next;
     struct node *temp = NULL;
 
@@ -113,16 +117,29 @@ void insert(int pos, char *value)
 
 void delete (char *value)
 {
-    // draw this login on paper 1st
-    struct node *p = head;
+    struct node *p = (struct node *)head;
     struct node *q = p->next;
     struct node *temp = NULL;
+    int name_not_found = 1;
+
+    if (temp->next == NULL)
+    {
+        printf("\b[+] The list is empty!");
+        return;
+    }
 
     // traverse to the required pos
-    while (strcmp(p->name, value) != 0)
+    while (p->next != NULL)
     {
+        if (name_not_found = strcmp(p->next->name, value) == 0)
+            break;
         p = p->next;
         q = q->next;
+    }
+    if (name_not_found < 0 || name_not_found > 0)
+    {
+        printf("\n[+] Book does not exist!");
+        return;
     }
 
     // rearrange the list
@@ -130,10 +147,35 @@ void delete (char *value)
     p->next = q->next;
 
     // free the memory
-    freeNode(temp);
+    freenode(temp);
 
     // decrement the header count
     head->data--;
+}
+
+void search_by_name(char *value)
+{
+    struct node *temp = (struct node *)head;
+    int name_not_found = 1;
+
+    if (temp->next == NULL)
+    {
+        printf("\b[+] The list is empty!");
+        return;
+    }
+
+    // traverse the list
+    while (temp->next != NULL)
+    {
+        // break when the name matches
+        if (name_not_found = strcmp(temp->next->name, value) == 0)
+            break;
+        temp = temp->next;
+    }
+    if (name_not_found < 0 || name_not_found > 0)
+        printf("\n[+] Book Does Not Exist!");
+    else
+        printf("\n[+] Book With '%s' Exists!", value);
 }
 
 void display_list()
@@ -163,12 +205,6 @@ void display_menu()
     printf("\n[+] Select an option: ");
 }
 
-void freenode(struct node *p)
-{
-    // free memory
-    free(p);
-}
-
 int main()
 {
     int op, pos;
@@ -185,23 +221,21 @@ int main()
         switch (op)
         {
         case 1:
-            printf("\nEnter the book name: ");
+            printf("\n[+] Enter the book name: ");
             scanf("%s", value);
-            printf("\t\tb4 append");
             append(value);
             break;
 
         case 2:
-            printf("\nEnter the book name: ");
+            printf("\n[+] Enter the book name: ");
             scanf("%s", value);
-            printf("\nEnter the position to insert: ");
+            printf("\n[+] Enter the position to insert: ");
             scanf("%d", &pos);
-            printf("\t\tb4 insert");
             insert(pos, value);
             break;
 
         case 3:
-            printf("\nEnter a bookname to delete: ");
+            printf("\n[+] Enter a bookname to delete: ");
             scanf("%s", value);
             delete (value);
             break;
@@ -210,11 +244,18 @@ int main()
             display_list();
             break;
 
+        case 5:
+            printf("\n[+] Enter a bookname to search: ");
+            // scanf("%s", value);
+            fgets(value, 100, stdin);
+            search_by_name(value);
+            break;
+
         case 6:
             exit(0);
             break;
         default:
-            printf("\nInvalid input!");
+            printf("\n[+] Invalid input!");
         }
     } while (1);
 
